@@ -1,0 +1,200 @@
+# CoreSystem Messages - Configure all plugin messages here.
+# You can use standard Bukkit color codes (&a, &b, &c, etc.)
+# Placeholders like {player}, {amount}, {level}, {skill_name}, {archetype_name}, etc., will be replaced by the plugin.
+
+# General plugin messages
+plugin-prefix: "&d[CoreSystem] " # This can be used by MessageManager to prefix all messages
+error-prefix: "&c[CoreSystem Error] "
+no-permission: "&cYou do not have permission to use this command."
+player-only-command: "&cThis command can only be used by players."
+player-not-found: "&cPlayer '{player}' not found or not online."
+unknown-subcommand: "&cUnknown subcommand. Use &e/{command} help&c for assistance."
+reloaded: "&aCoreSystem configuration and messages reloaded successfully."
+
+# Core command messages
+core:
+  help-header: "&6--- CoreSystem Player Commands ---"
+  help-claim: "&e/core claim &7- Get a new Core Seed."
+  help-place: "&e/core place &7- Place your Core from a Core Seed."
+  help-restore: "&e/core restore &7- Restore your destroyed Core."
+  help-feed: "&e/core feed &7- Feed an item to your Core for XP."
+  help-energize: "&e/core energize &7- Use an item to regain Core energy."
+  help-archetype: "&e/core archetype <name> &7- Choose an Archetype for your Core."
+  help-skill: "&e/core skill <skill_id> &7- Activate a Core skill."
+  help-rebirth: "&e/core rebirth &7- Rebirth your max-level Core."
+  help-history: "&e/core history &7- View your Core's rebirth history."
+  help-gui: "&e/core gui (or /core) &7- Open the Core information menu."
+  help-admin-refer: "&cUse /coreadmin help for admin commands."
+
+  claim:
+    success: "{plugin_prefix}&a{seed_name} &aclaimed successfully!"
+    already-active: "{error_prefix}&cYou already have an active Core."
+    has-seed: "{error_prefix}&cYou already have a Core Seed in your inventory."
+    cooldown: "{error_prefix}&cYou must wait {time} seconds before claiming another Core Seed."
+    inventory-full: "{error_prefix}&cYour inventory is full. Could not give you the Core Seed."
+  place:
+    success: "{plugin_prefix}&aYour Core has been placed successfully!"
+    now-protected: "{plugin_prefix}&7Its location is now protected."
+    already-active: "{error_prefix}&cYou already have an active Core. You cannot place another one."
+    no-seed: "{error_prefix}&cYou must be holding a &dCore Seed&c in your main hand to place your Core."
+    obstructed: "{error_prefix}&cCannot place your Core here. The location (or one block above) is obstructed."
+    protected-area: "{error_prefix}&cYou cannot place your Core here, this location is already protected or too close to another Core."
+    choose-archetype: "{plugin_prefix}&eYour Core is placed! Choose your Archetype with &b/core archetype <name>&e."
+    available-archetypes: "{plugin_prefix}&eAvailable: &f{archetypes_list}"
+  restore:
+    success: "{plugin_prefix}&aYour Core has been successfully restored at your new location!"
+    already-active: "{error_prefix}&cYou already have an active Core."
+    no-backup: "{error_prefix}&cNo Core backup found to restore."
+    disabled: "{error_prefix}&cCore restoration is currently disabled."
+    cooldown: "{error_prefix}&cYou must wait {time} seconds before restoring your Core again."
+    no-money: "{error_prefix}&cYou do not have enough money to restore your Core. Cost: {cost}"
+    missing-items: "{error_prefix}&cYou are missing required items to restore your Core. Needed: {amount}x {item_name}"
+    transaction-fail: "{error_prefix}&cFailed to withdraw restoration cost: {error_message}"
+    unexpected-error: "{error_prefix}&cAn unexpected error occurred while restoring from backup."
+    obstructed: "{error_prefix}&cCannot restore your Core here. The location (or one block above) is obstructed."
+    protected-area: "{error_prefix}&cYou cannot restore your Core here, this location is already protected or too close to another Core."
+  feed:
+    needs-active-core: "{error_prefix}&cYou need an active Core to feed it."
+    max-level: "{error_prefix}&cYour Core is already at the maximum level and cannot be fed further."
+    cooldown: "{error_prefix}&cYou must wait {time} seconds before feeding your Core again."
+    no-item: "{error_prefix}&cYou must be holding an item in your hand to feed your Core."
+    no-xp-configured: "{error_prefix}&cFeeding items is not configured to give XP currently."
+    # Success message handled by addCoreXP notification
+  energize:
+    needs-active-core: "{error_prefix}&cYou need an active Core to energize it."
+    energy-full: "{plugin_prefix}&bYour Core energy is already full!"
+    cooldown: "{error_prefix}&cYou must wait {time} seconds before energizing again."
+    no-item: "{error_prefix}&cYou are not holding any item to energize your Core."
+    item-not-usable: "{error_prefix}&c{item_name} cannot be used to energize your Core."
+    item-no-energy: "{error_prefix}&cThis item ({item_name}) is configured to give no energy."
+    success: "{plugin_prefix}&aYou energized your Core with &e{item_name}&a, gaining &b{amount}&a energy!"
+    current-energy: "&7Current Energy: &b{current_energy}&7/&b{max_energy}"
+  archetype:
+    usage: "&eUsage: /core archetype <name>"
+    list-available: "&eAvailable: &f{archetypes_list}"
+    needs-active-core: "{error_prefix}&cYou need an active Core to choose an Archetype."
+    already-chosen: "{error_prefix}&cYou have already chosen an Archetype: {archetype_name}. It can only be changed by rebirthing."
+    # level-restriction: "{error_prefix}&cYou can only choose an Archetype at Level 1." # If implemented
+    invalid-name: "{error_prefix}&cInvalid Archetype name. Use /core archetype for a list."
+    success: "{plugin_prefix}&aYou have chosen the {archetype_display_name} &aArchetype for your Core!"
+    description: "&7{description}"
+  skill:
+    usage: "&eUsage: /core skill <skill_id>"
+    needs-active-core: "{error_prefix}&cYou need an active Core to use skills."
+    no-archetype: "{error_prefix}&cYou must choose an Archetype first with /core archetype <name>."
+    not-found: "{error_prefix}&cSkill '{skill_id}' not found."
+    not-owner-archetype: "{error_prefix}&cThis skill does not belong to your current Core Archetype."
+    not-unlocked: "{error_prefix}&cSkill {skill_name} &c is not unlocked yet."
+    on-cooldown: "{error_prefix}{skill_name} &c is on cooldown for {time}s."
+    no-energy: "{error_prefix}&cNot enough energy for {skill_name}&c. Needs: {required_energy}, You have: {current_energy}."
+    success: "{plugin_prefix}&aUsed skill: {skill_name}!"
+    apply-fail: "{error_prefix}&cCould not apply skill {skill_name} &c(e.g. no target in range)."
+    effect-placeholder: "&7Skill {skill_name} &7 has no defined effect yet." # For SkillManager default case
+  rebirth:
+    needs-active-core: "{error_prefix}&cYou need an active Core to perform a rebirth."
+    not-max-level: "{error_prefix}&cYour Core must be at the maximum level ({max_level}) to rebirth."
+    all-mutations-acquired: "{plugin_prefix}&eYou have already acquired all available mutations!"
+    success-header: "{plugin_prefix}&a&lCORE REBIRTH! Your Core has been reborn!"
+    new-rebirth-count: "&7You are now at Rebirth: &e{rebirth_count}"
+    stats-reset: "&7Level reset to 1. XP reset to 0."
+    mutation-unlocked: "&7New Mutation Unlocked: {mutation_name}"
+    mutation-description: "&7  {mutation_description}"
+  history:
+    header: "&6--- Core History ---"
+    rebirths: "&eRebirths: &f{count}"
+    mutations-header: "&eAcquired Mutations:"
+    no-mutations: "&eMutations: &7None acquired yet."
+    mutation-entry: "&7- {mutation_name}&7: {mutation_description}"
+    unknown-mutation: "&7- &cUnknown Mutation ID: {mutation_id}"
+
+# Core Admin command messages
+coreadmin:
+  help-header: "&6--- CoreSystem Admin Commands ---"
+  help-damage: "&e/coreadmin damage <player> <amount> &7- Damages a player's core."
+  help-destroy: "&e/coreadmin destroy <player> &7- Destroys a player's core."
+  help-sethealth: "&e/coreadmin sethealth <player> <amount> &7- Sets core health."
+  help-gethealth: "&e/coreadmin gethealth <player> &7- Gets core health."
+  help-setlevel: "&e/coreadmin setlevel <player> <level> &7- Sets core level."
+  help-setxp: "&e/coreadmin setxp <player> <amount> &7- Sets total core XP."
+  help-setenergy: "&e/coreadmin setenergy <player> <amount> &7- Sets core energy."
+  help-setarchetype: "&e/coreadmin setarchetype <player> <archetype_id> &7- Sets core archetype."
+  help-reload: "&e/coreadmin reload &7- Reloads the plugin configuration."
+
+  damage:
+    usage: "{error_prefix}&cUsage: /coreadmin damage <player> <amount>"
+    amount-positive: "{error_prefix}&cDamage amount must be positive."
+    no-active-core: "{error_prefix}&c{player} does not have an active core to damage."
+    success: "{plugin_prefix}&aDamaged {player}'s core by {amount} health."
+    notify-target: "{plugin_prefix}&cYour Core has been damaged by an administrator by {amount} health!"
+  destroy:
+    usage: "{error_prefix}&cUsage: /coreadmin destroy <player>"
+    player-must-be-online: "{error_prefix}&cPlayer {player} must be online to use this command version of destroy." # If offline destroy is not fully supported for admin direct messages
+    no-active-core: "{error_prefix}&c{player} does not have an active core to destroy."
+    success: "{plugin_prefix}&aDestroyed {player}'s core administratively."
+    offline-success: "{plugin_prefix}&aDestroyed offline player {player}'s core administratively."
+  sethealth:
+    usage: "{error_prefix}&cUsage: /coreadmin sethealth <player> <amount>"
+    no-active-core: "{error_prefix}&c{player} does not have an active core."
+    success: "{plugin_prefix}&aSet {player}'s core health to {current_health}/{max_health}."
+    notify-target: "{plugin_prefix}&eYour Core health has been set to {current_health}/{max_health} by an administrator."
+    invalid-amount: "{error_prefix}&cInvalid health amount: {amount}"
+  gethealth:
+    usage: "{error_prefix}&cUsage: /coreadmin gethealth <player>"
+    no-active-core: "{error_prefix}&c{player} does not have an active core."
+    response: "&e{player}'s Core Health: &f{current_health}/{max_health}"
+  setlevel:
+    usage: "{error_prefix}&cUsage: /coreadmin setlevel <player> <level>"
+    level-range: "{error_prefix}&cLevel must be between 1 and {max_level}."
+    success: "{plugin_prefix}&aSet {player}'s core level to {level} (XP adjusted to start of level)."
+    invalid-number: "{error_prefix}&cInvalid level number: {level}"
+  setxp:
+    usage: "{error_prefix}&cUsage: /coreadmin setxp <player> <total_xp_amount>"
+    xp-negative: "{error_prefix}&cXP amount cannot be negative."
+    success: "{plugin_prefix}&aSet {player}'s total core XP to {xp}. New level: {level}"
+    invalid-amount: "{error_prefix}&cInvalid XP amount: {amount}"
+  setenergy:
+    usage: "{error_prefix}&cUsage: /coreadmin setenergy <player> <amount>"
+    success: "{plugin_prefix}&aSet {player}'s core energy to {current_energy}/{max_energy}."
+    invalid-amount: "{error_prefix}&cInvalid energy amount: {amount}"
+  setarchetype:
+    usage: "{error_prefix}&cUsage: /coreadmin setarchetype <player> <archetype_id>"
+    list-available: "{error_prefix}&cAvailable: AGGRESSIVE, DEFENSIVE, MENTAL, MOBILE, or NONE to clear."
+    cleared: "{plugin_prefix}&aCleared {player}'s core archetype."
+    invalid-id: "{error_prefix}&cInvalid archetype ID: {archetype_id}"
+    success: "{plugin_prefix}&aSet {player}'s core archetype to {archetype_id}."
+
+# Core specific messages
+core-status:
+  active: "Active"
+  destroyed-backup: "Destroyed (Backup Available)"
+  inactive: "Inactive"
+
+xp-gain-message: "&7Gained &b{amount} &7Core XP from &e{reason}&7."
+# debug-xp-gain-message: "&7Gained &b{amount} &7Core XP from &e{reason}&7. Total: &b{total_xp}" # For debug mode
+level-up-message: "&a&lCORE LEVEL UP! Your Core is now Level &e{level}&a&l!"
+skill-unlocked: "{plugin_prefix}&aSkill Unlocked: {skill_name}"
+
+# Protection messages
+cannot-break-core-block: "{error_prefix}&cYou cannot break the block your Core is on! Manage your core via commands."
+cannot-break-region: "{error_prefix}&cYou cannot break blocks in this protected Core region."
+cannot-place-region: "{error_prefix}&cYou cannot place blocks in this protected Core region."
+cannot-place-on-core: "{error_prefix}&cYou cannot place a block directly on/in your Core entity."
+explosion-prevented: "Explosion prevented block destruction at {location} in region of {owner_uuid}" # Debug only
+
+# Tutorial messages (can be a list if needed, but for simplicity now, single messages or handled in code)
+tutorial:
+  welcome: "&eWelcome to the server! This server features &dCoreSystem&e."
+  what-is-core: "&7Your &dCore&7 is your life and power. Protect and upgrade it!"
+  claim-seed: "&7To begin, claim your &dCore Seed&7 with &b/core claim&7."
+  place-core: "&7Once you have the seed, find a safe spot and place it using &b/core place&7."
+  evolution: "&7Your Core will initially be a simple beacon. It will evolve as it levels up!" # Changed from ArmorStand to Beacon for consistency with current state
+  feed-core: "&7Feed your core with &b/core feed&7 (holding an item) to give it XP."
+  kill-for-xp: "&7Kill mobs and players to gain more XP for your Core."
+  gui-info: "&7Use &b/core&7 to open the main menu and see your Core's status."
+  good-luck: "&7Good luck, and may your Core thrive!"
+  # debug-complete: "&7(Debug: Tutorial marked as completed)" # This should remain in code if only for debug
+
+# Action Bar
+actionbar:
+  no-cooldowns-text: "&aReady" # Already in config.yml, but good to have a reference/default here
+  # format: "&e⚡ Energy: &b%coresystem_energy%&7/&b%coresystem_max_energy% &7| &c⏳ Skills: %coresystem_active_cooldowns%" - Defined in config.yml

@@ -1,0 +1,122 @@
+# CoreSystem Skills and Archetypes Configuration
+
+archetypes:
+  AGGRESSIVE:
+    display_name: "&cAggressive Core"
+    description: "Focuses on offensive power and direct damage."
+    icon: "DIAMOND_SWORD"
+    skills:
+      aggressive_strike_1:
+        name: "&cMinor Strike"
+        description:
+          - "&7Unleash a focused energy strike."
+          - "&7Deals direct damage to a target."
+        required_level: 2
+        energy_cost: 15
+        cooldown: 10
+        type: "DIRECT_DAMAGE"
+        effect_details:
+          damage_amount: 4.0 # 2 hearts
+          range: 5.0 # blocks
+          # particle_caster: "CRIT_MAGIC" # Particle at caster
+          particle_target: "DAMAGE_INDICATOR" # Particle at target (red crit)
+          sound_caster: "ENTITY_PLAYER_ATTACK_SWEEP"
+          # sound_target: "ENTITY_PLAYER_HURT"
+      aggressive_fury_1: # Keeping for consistency, though not implementing effect now
+        name: "&4Battle Fury"
+        description:
+          - "&7Enter a short-lived battle fury,"
+          - "&7temporarily increasing your attack speed."
+        required_level: 5
+        energy_cost: 30
+        cooldown: 45
+        type: "POTION_EFFECT_SELF"
+        effect_details:
+          potion_type: "SPEED"
+          amplifier: 0 # Level I
+          duration_seconds: 10
+        # prerequisites: ["aggressive_strike_1"]
+
+  DEFENSIVE:
+    display_name: "&9Defensive Core"
+    description: "Specializes in protection and endurance."
+    icon: "SHIELD"
+    skills:
+      defensive_harden_1:
+        name: "&9Harden Shell"
+        description:
+          - "&7Temporarily increases your physical resistance."
+        required_level: 2
+        energy_cost: 20
+        cooldown: 30
+        type: "POTION_EFFECT_SELF"
+        effect_details:
+          potion_type: "RESISTANCE"
+          amplifier: 0 # Resistance I
+          duration_seconds: 8
+          # particle_self: "ENCHANTMENT_TABLE" # Duration based particle
+          sound_caster: "ITEM_ARMOR_EQUIP_IRON"
+      defensive_bastion_1: # Keeping for consistency
+        name: "&1Bastion Field"
+        description:
+          - "&7Create a small, temporary field that"
+          - "&7reduces incoming projectile damage."
+        required_level: 5
+        energy_cost: 35
+        cooldown: 60
+        type: "AREA_AURA" # Placeholder for future
+        # effect_details: ...
+        # prerequisites: ["defensive_harden_1"]
+
+  MENTAL:
+    display_name: "&dMental Core"
+    description: "Masters of psionic energies and illusions."
+    icon: "ENDER_EYE"
+    skills:
+      mental_clarity_1:
+        name: "&dClarity"
+        description:
+          - "&7Briefly enhances energy regeneration."
+        required_level: 3
+        energy_cost: 5
+        cooldown: 60
+        type: "ENERGY_REGEN_BOOST_SELF" # Placeholder
+      mental_illusion_1:
+        name: "&5Minor Illusion"
+        description:
+          - "&7Creates a harmless, distracting illusion"
+          - "&7at a target location for a short time."
+        required_level: 6
+        energy_cost: 25
+        cooldown: 40
+        type: "TARGETED_VISUAL" # Placeholder
+
+  MOBILE:
+    display_name: "&bMobile Core"
+    description: "Excels in agility and battlefield repositioning."
+    icon: "FEATHER"
+    skills:
+      mobile_dash_1: # Keeping for consistency
+        name: "&bQuick Dash"
+        description:
+          - "&7Perform a short, quick dash in the"
+          - "&7direction you are looking."
+        required_level: 2
+        energy_cost: 10
+        cooldown: 8
+        type: "MOVEMENT_DASH" # Placeholder
+      core_launch_1: # New skill as requested
+        name: "&3Core Launch"
+        description:
+          - "&7Launch your target slightly upwards and backwards."
+        required_level: 3
+        energy_cost: 20
+        cooldown: 15
+        type: "TARGETED_LAUNCH"
+        effect_details:
+          range: 7.0 # blocks
+          velocity_y: 0.4 # Upward velocity
+          velocity_backward_multiplier: 0.8 # Multiplier for vector away from caster
+          # particle_target: "EXPLOSION_NORMAL"
+          sound_caster: "ENTITY_PISTON_EXTEND"
+        # prerequisites: ["mobile_dash_1"] # Example if needed

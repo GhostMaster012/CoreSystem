@@ -1,0 +1,41 @@
+# Core Evolution Visuals (Vanilla - CustomModelData)
+
+# Define a list of evolutions. The first one matched by level range will be used.
+# Ensure ranges do not overlap unintentionally or define clear priority.
+# It's generally easier if ranges are sequential and cover all levels up to max.
+
+# The item material used for the core's visual representation on the ArmorStand's head.
+# Using PAPER as a common base, but can be any item that supports CustomModelData.
+# This can be overridden per evolution entry if needed.
+default_item_material: "PAPER"
+
+evolutions:
+  - level_range: "1-4" # For core levels 1 through 4
+    # item_material: "PAPER" # Optional: overrides default_item_material
+    custom_model_data: 10001
+    # display_name: "&fPrimitive Core" # Optional: if you want the item to have a name (not visible on ArmorStand directly)
+    # lore: # Optional lore
+    #  - "&7A young and fragile core."
+
+  - level_range: "5-9" # For core levels 5 through 9
+    custom_model_data: 10002
+    # display_name: "&eDeveloping Core"
+
+  - level_range: "10-14"
+    custom_model_data: 10003
+    # display_name: "&6Mature Core"
+
+  - level_range: "15-19"
+    custom_model_data: 10004
+    # display_name: "&bAdvanced Core"
+
+  - level_range: "20-20" # For max level (or a specific range for it)
+    custom_model_data: 10005
+    # display_name: "&dPerfected Core"
+
+# Fallback if no specific range is matched (e.g., for levels beyond defined ranges, though max_core_level should prevent this)
+# It's better to ensure all levels up to max-core-level (from config.yml) are covered by the ranges above.
+fallback_evolution:
+  item_material: "STONE" # A very basic fallback
+  custom_model_data: 0 # No custom model data, just the item itself
+  # display_name: "&8Undefined Core State"

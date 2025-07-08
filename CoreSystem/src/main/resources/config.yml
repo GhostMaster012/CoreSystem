@@ -1,0 +1,128 @@
+# CoreSystem Configuration
+
+# Storage type: YAML or MYSQL (case-insensitive)
+# MYSQL is not yet implemented, defaults to YAML if MYSQL is chosen for now.
+storage:
+  type: YAML
+  # MySQL settings (only used if type is MYSQL)
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "coresystem"
+    username: "user"
+    password: "password"
+    useSSL: false
+
+# Default protection radius around the core when placed (in blocks)
+default-protection-radius: 5
+
+# Core Stats
+default-core-max-health: 100.0 # Default maximum health for a new core
+default-core-max-energy: 100.0 # Default maximum energy for a new core
+max-core-level: 20
+
+# Core Energy Settings
+energy-regeneration:
+  passive-enabled: true
+  # Amount of energy to regenerate per interval
+  passive-amount: 1.0
+  # Interval in seconds for passive regeneration
+  passive-interval-seconds: 5
+
+# Items that can be consumed to regain energy (via /core energize <item_name> or by holding)
+# Format: MATERIAL_NAME: ENERGY_GAINED
+# Example: energy-items: { "LAPIS_LAZULI": 20, "REDSTONE": 10 }
+energy-items:
+  LAPIS_LAZULI: 25
+  REDSTONE: 10
+  GLOWSTONE_DUST: 15
+  # AMETHYST_SHARD: 20 # Example for newer versions
+
+# Core vulnerability settings
+core-vulnerability:
+  # If true, core is always vulnerable unless a specific condition protects it.
+  # If false (recommended default), core is invulnerable unless a specific condition makes it vulnerable.
+  vulnerable-by-default: false
+  # If true, core can be damaged by anyone at any time (respecting region protection for block breaking).
+  # This overrides other specific conditions if set to true.
+  allow-damage-anytime: false
+
+  # Conditions that make the core vulnerable (if vulnerable-by-default is false)
+  # OR conditions that make an otherwise vulnerable core invulnerable (if vulnerable-by-default is true and a condition here is false)
+  # This section will need more fleshing out based on specific integrations.
+  conditions:
+    # faction-war: true # Example: Core is vulnerable if player's faction is at war (Requires Factions plugin integration)
+    # during-raid-event: true # Example: Vulnerable during a custom server raid event
+    placeholder-condition-always-vulnerable: false # For testing, if set to true, makes core vulnerable if other conditions met
+
+  # What can damage the core when it's vulnerable. Empty list means all sources.
+  # Valid sources: PLAYER, TNT, CREEPER, FIREBALL, LAVA, ARROW, MOB (generic mob), specific EntityType names.
+  # Example: damage-sources: ["PLAYER", "TNT", "CREEPER"]
+  damage-sources: []
+
+# Cost for restoring a destroyed core
+core-restoration:
+  enabled: true
+  vault-economy-cost: 1000.0
+  item-costs:
+     - "DIAMOND:5"
+     - "GOLD_INGOT:10"
+  cooldown: 600 # 10 minutes
+
+# Settings for the "Core Seed" item
+core-seed-item:
+  material: "HEART_OF_THE_SEA"
+  name: "&d&lCore Seed"
+  lore:
+    - "&7A dormant seed, pulsating with potential."
+    - "&7Place it to awaken your Core."
+  custom-model-data: -1
+
+# Command Cooldowns (in seconds)
+command-cooldowns:
+  core-claim: 3600
+  core-feed: 60
+  core-energize: 30 # Cooldown for using energy items
+
+# Global announcement on core destruction
+announce-core-destruction: true
+destruction-announcement-message: "&c&lATTENTION! {player}''s Core has been destroyed!"
+
+# Debug mode for extra logging
+debug-mode: false
+
+# Action Bar Display
+action-bar:
+  enabled: true
+  # Update interval in ticks (20 ticks = 1 second)
+  update-interval-ticks: 20
+  format: "&e⚡ Energy: &b%coresystem_energy%&7/&b%coresystem_max_energy% &7| &c⏳ Skills: %coresystem_active_cooldowns%"
+  # %coresystem_active_cooldowns% will be a custom placeholder handled by the action bar task.
+  # It will show the skill with the longest remaining cooldown or "Ready".
+  no-cooldowns-text: "&aReady"
+
+
+# WorldGuard Integration Settings
+worldguard:
+  enabled: true # Set to false to force use of built-in protection even if WorldGuard is present
+  # Default flags to set on created Core regions.
+  # Format: FLAG_NAME: STATE (ALLOW/DENY)
+  # Refer to WorldGuard flag documentation for available flags.
+  # Example: build: DENY (denies building for non-members/non-owners by default)
+  # To allow only owners, you might set a general DENY, then WorldGuard handles owner bypass,
+  # or use more specific group flags if needed (more complex).
+  default-flags:
+    # General protection for non-owners/non-members
+    block-break: "DENY"
+    block-place: "DENY"
+    interact: "DENY" # Prevents opening chests, doors, etc. by non-owners.
+    # PVP: "DENY" # Example: make core zones non-PVP
+    # use: "DENY" # Prevents using buttons, levers by non-owners
+
+    # It's generally assumed owners can bypass these.
+    # If you want to explicitly set owner-specific flags, that's more advanced
+    # and might involve region groups or more complex flag configurations.
+    # For now, these deny flags apply to those not matching the owner group implicitly.
+    # WorldGuard's default behavior is that region owners can bypass most protection flags.
+    # We will explicitly set BUILD to ALLOW for the owner to ensure they can build.
+    # This is handled in the WorldGuardIntegration class logic after applying these defaults.

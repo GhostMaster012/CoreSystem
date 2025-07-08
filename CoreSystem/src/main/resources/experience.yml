@@ -1,0 +1,38 @@
+# Configuration for Core Experience Sources
+
+# Experience gained from killing mobs
+# You can specify XP per mob type, or use DEFAULT for any mob not listed.
+mob-kills:
+  # Specific mob XP values
+  ZOMBIE: 5
+  SKELETON: 5
+  CREEPER: 10
+  SPIDER: 4
+  ENDERMAN: 15
+  # Default XP for any other mob not listed above
+  DEFAULT: 1
+
+# Experience gained from killing other players
+player-kill: 50
+
+# Experience gained from feeding the core items
+# This is a placeholder for now. A more complex system might involve a GUI
+# and different XP values per item type.
+# For now, this could be a flat rate if a /core feed command is implemented simply.
+core-feed:
+  # Example: Feeding a DIAMOND gives 100 XP
+  # DIAMOND: 100
+  # GOLD_INGOT: 20
+  # This section is more for planning the /core feed GUI later.
+  # For a simple command, we might just use a flat value or a specific item.
+  DEFAULT_ITEM_SACRIFICE_XP: 5 # If a generic item is sacrificed via a simple command
+
+# Experience from survival events (placeholders for now, API can be used by other plugins)
+# e.g., time-survived, distance-travelled - these would require active tracking.
+survival-events:
+  # first-join-bonus: 100 # Example, not implemented in this step
+  # play-time-hour: 10 # Example, grant 10 xp per hour of playtime
+
+# Maximum level a core can reach (also in config.yml, ensure they are consistent or one takes precedence)
+# This is more of a reference here; max-core-level in config.yml is the primary controller.
+# max-level: 20

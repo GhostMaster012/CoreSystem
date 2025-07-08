@@ -1,0 +1,114 @@
+name: CoreSystem
+version: '${project.version}'
+main: com.example.coresystem.CoreSystem
+api-version: '1.20'
+authors: [Jules] # Actualizado :)
+description: '${project.description}'
+website: # Tu website si tienes uno
+
+depend: [Vault] # Hard depend
+softdepend: [PlaceholderAPI, Citizens, ModelEngine, WorldGuard]
+
+commands:
+  core:
+    description: Main command for CoreSystem.
+    usage: /<command> [subcommand]
+    aliases: [c, nucleus]
+    # No specific permission here, subcommands will have their own.
+    # Default access to /core (for GUI/help) can be granted via coresystem.command.core
+  coreadmin:
+    description: Admin commands for CoreSystem.
+    usage: /<command> [subcommand]
+    permission: coresystem.command.coreadmin # Base permission for /coreadmin
+
+permissions:
+  coresystem.user:
+    description: Grants access to all basic user features and commands for CoreSystem.
+    default: true # Or 'op' if you prefer only ops have it by default initially
+    children:
+      coresystem.command.core: true
+      coresystem.core.claim: true
+      coresystem.core.place: true
+      coresystem.core.restore: true
+      coresystem.core.feed: true
+      coresystem.core.energize: true
+      coresystem.core.archetype.choose: true
+      coresystem.core.skill.use: true
+      coresystem.core.rebirth: true
+      coresystem.core.history: true
+
+  coresystem.command.core:
+    description: Allows usage of the base /core command (for GUI, help).
+    default: true
+  coresystem.core.claim:
+    description: Allows usage of /core claim.
+    default: true
+  coresystem.core.place:
+    description: Allows usage of /core place.
+    default: true
+  coresystem.core.restore:
+    description: Allows usage of /core restore.
+    default: true
+  coresystem.core.feed:
+    description: Allows usage of /core feed.
+    default: true
+  coresystem.core.energize:
+    description: Allows usage of /core energize.
+    default: true
+  coresystem.core.archetype.choose:
+    description: Allows choosing an archetype via /core archetype.
+    default: true
+  coresystem.core.skill.use:
+    description: Allows usage of /core skill <skill_id>.
+    default: true
+  coresystem.core.rebirth:
+    description: Allows usage of /core rebirth.
+    default: true # Or op, depending on how prestige-like you want it
+  coresystem.core.history:
+    description: Allows usage of /core history.
+    default: true
+
+  coresystem.admin: # Node for all admin permissions
+    description: Grants access to all admin commands and features for CoreSystem.
+    default: op
+    children:
+      coresystem.command.coreadmin: true
+      coresystem.admin.damage: true
+      coresystem.admin.destroy: true
+      coresystem.admin.sethealth: true
+      coresystem.admin.setlevel: true
+      coresystem.admin.setxp: true
+      coresystem.admin.setenergy: true
+      coresystem.admin.setarchetype: true
+      coresystem.admin.reload: true
+      # coresystem.admin.resetplayer: true # For future
+      # coresystem.admin.forcefeed: true # For future
+      # coresystem.admin.givemutation: true # For future
+
+  coresystem.command.coreadmin:
+    description: Allows usage of the base /coreadmin command.
+    default: op
+  coresystem.admin.damage:
+    description: Allows usage of /coreadmin damage.
+    default: op
+  coresystem.admin.destroy:
+    description: Allows usage of /coreadmin destroy.
+    default: op
+  coresystem.admin.sethealth:
+    description: Allows usage of /coreadmin sethealth.
+    default: op
+  coresystem.admin.setlevel:
+    description: Allows usage of /coreadmin setlevel.
+    default: op
+  coresystem.admin.setxp:
+    description: Allows usage of /coreadmin setxp.
+    default: op
+  coresystem.admin.setenergy:
+    description: Allows usage of /coreadmin setenergy.
+    default: op
+  coresystem.admin.setarchetype:
+    description: Allows usage of /coreadmin setarchetype.
+    default: op
+  coresystem.admin.reload:
+    description: Allows usage of /coreadmin reload.
+    default: op
